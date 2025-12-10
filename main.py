@@ -8,7 +8,7 @@ def get_remote_message():
         r = requests.get(REMOTE_MESSAGE_URL, timeout=5)
         return r.text.strip()
     except:
-        return "Bağlantı hatası!"
+        return "Bağlantı hatası! Arda Yagci"
 
 def main():
     print("🟢 Uygulama başladı. Remote mesaj okunuyor...\n")
