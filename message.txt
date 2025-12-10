@@ -1,1 +1,1 @@
-Merhaba Halil! Bu mesaj GitHub'dan geliyor.
+Merhaba Halil! Mesaj GitHub'dan çekiliyor.
