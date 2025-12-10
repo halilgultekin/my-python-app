@@ -1,7 +1,7 @@
+# main.py
 import requests
 import time
-import sys
-from requests.exceptions import RequestException, SSLError, ProxyError, Timeout, ConnectionError
+import os
 
 REMOTE_MESSAGE_URL = "https://raw.githubusercontent.com/halilgultekin/my-python-app/main/message.txt"
 LOCAL_FALLBACK = "local_message.txt"
@@ -9,7 +9,7 @@ LOCAL_FALLBACK = "local_message.txt"
 def get_remote_message():
     try:
         r = requests.get(REMOTE_MESSAGE_URL, timeout=10)
-        r.raise_for_status()  # HTTPError için
+        r.raise_for_status()
         return r.text.strip(), None
     except Exception as e:
         return None, e
@@ -31,21 +31,18 @@ def main():
             print("🔹 Uzaktaki mesaj:", msg)
         else:
             attempt += 1
-            print("‼️ Uzaktan çekme hatası (deneme {}):".format(attempt))
+            print(f"‼️ Uzaktan çekme hatası (deneme {attempt}):")
             print("   Hata türü:", type(err).__name__)
-            print("   Hata detayı:", str(err))
-            # local fallback göster
+            print("   Hata detayı:", err)
             fallback = read_local_fallback()
             if fallback:
                 print("   Yerel fallback mesaj:", fallback)
             else:
                 print("   Yerel fallback yok.")
-            # backoff: artan bekleme süresi
             wait = min(60, 5 * attempt)
             print(f"   {wait} saniye sonra tekrar denenecek...\n")
             time.sleep(wait)
             continue
-
         time.sleep(5)
 
 if __name__ == "__main__":
